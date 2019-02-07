@@ -1,0 +1,14 @@
+/Users/bertran95u/Projects/mlapi/bin/Debug/netcoreapp2.2/mlapi.deps.json
+/Users/bertran95u/Projects/mlapi/bin/Debug/netcoreapp2.2/mlapi.runtimeconfig.json
+/Users/bertran95u/Projects/mlapi/bin/Debug/netcoreapp2.2/mlapi.runtimeconfig.dev.json
+/Users/bertran95u/Projects/mlapi/bin/Debug/netcoreapp2.2/mlapi.dll
+/Users/bertran95u/Projects/mlapi/bin/Debug/netcoreapp2.2/mlapi.pdb
+/Users/bertran95u/Projects/mlapi/obj/Debug/netcoreapp2.2/mlapi.csprojAssemblyReference.cache
+/Users/bertran95u/Projects/mlapi/obj/Debug/netcoreapp2.2/mlapi.csproj.CoreCompileInputs.cache
+/Users/bertran95u/Projects/mlapi/obj/Debug/netcoreapp2.2/mlapi.RazorAssemblyInfo.cache
+/Users/bertran95u/Projects/mlapi/obj/Debug/netcoreapp2.2/mlapi.RazorAssemblyInfo.cs
+/Users/bertran95u/Projects/mlapi/obj/Debug/netcoreapp2.2/mlapi.AssemblyInfoInputs.cache
+/Users/bertran95u/Projects/mlapi/obj/Debug/netcoreapp2.2/mlapi.AssemblyInfo.cs
+/Users/bertran95u/Projects/mlapi/obj/Debug/netcoreapp2.2/mlapi.RazorTargetAssemblyInfo.cache
+/Users/bertran95u/Projects/mlapi/obj/Debug/netcoreapp2.2/mlapi.dll
+/Users/bertran95u/Projects/mlapi/obj/Debug/netcoreapp2.2/mlapi.pdb
