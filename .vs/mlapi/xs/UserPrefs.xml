@@ -1,5 +1,11 @@
 ﻿<Properties StartupConfiguration="{68ADE8A7-42DC-491A-8DD4-7048AE8CCEB9}|Default">
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Startup.cs">
+    <Files>
+      <File FileName="ml/TransformSamplesIid.cs" Line="67" Column="23" />
+      <File FileName="Program.cs" Line="17" Column="54" />
+      <File FileName="Startup.cs" Line="24" Column="14" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.ItemProperties.mlapi PreferredExecutionTarget="MonoDevelop.Default" />

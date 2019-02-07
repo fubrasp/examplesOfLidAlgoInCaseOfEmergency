@@ -10,9 +10,9 @@ using Microsoft.ML.TimeSeriesProcessing;
 
 namespace mlapi.ml
 {
-    public partial class TransformSamplesIid
+    public class TransformSamplesIid
     {
-        class IidSpikeData
+        public class IidSpikeData
         {
             public float Value;
 
@@ -22,7 +22,7 @@ namespace mlapi.ml
             }
         }
 
-        class IidSpikePrediction
+        public class IidSpikePrediction
         {
             [VectorType(3)]
             public double[] Prediction { get; set; }
@@ -30,7 +30,7 @@ namespace mlapi.ml
 
         // This example creates a time series (list of Data with the i-th element corresponding to the i-th time slot). 
         // IidSpikeDetector is applied then to identify spiking points in the series.
-        public static void IidSpikeDetectorTransform()
+        public static IEnumerable<IidSpikePrediction> IidSpikeDetectorTransform()
         {
             // Create a new ML context, for ML.NET operations. It can be used for exception tracking and logging, 
             // as well as the source of randomness.
@@ -47,7 +47,7 @@ namespace mlapi.ml
                 data.Add(new IidSpikeData(5));
 
             // Convert data to IDataView.
-            var dataView = ml.Data.ReadFromEnumerable(data);
+            var dataView = ml.CreateStreamingDataView(data);
 
             // Setup IidSpikeDetector arguments
             string outputColumnName = nameof(IidSpikePrediction.Prediction);
@@ -64,7 +64,7 @@ namespace mlapi.ml
             var transformedData = new IidSpikeEstimator(ml, args).Fit(dataView).Transform(dataView);
 
             // Getting the data of the newly created column as an IEnumerable of IidSpikePrediction.
-            var predictionColumn = ml.CreateEnumerable<IidSpikePrediction>(transformedData, reuseRowObject: false);
+            var predictionColumn = transformedData.AsEnumerable<IidSpikePrediction>(ml, reuseRowObject: false);
 
             Console.WriteLine($"{outputColumnName} column obtained post-transformation.");
             Console.WriteLine("Alert\tScore\tP-Value");
@@ -85,6 +85,7 @@ namespace mlapi.ml
             // 0       5.00    0.50
             // 0       5.00    0.50
             // 0       5.00    0.50
+            return predictionColumn;
         }
 
         public static void IidSpikeDetectorPrediction()
@@ -104,7 +105,7 @@ namespace mlapi.ml
                 data.Add(new IidSpikeData(5));
 
             // Convert data to IDataView.
-            var dataView = ml.Data.ReadFromEnumerable(data);
+            var dataView = ml.CreateDataView(data);
 
             // Setup IidSpikeDetector arguments
             string outputColumnName = nameof(IidSpikePrediction.Prediction);

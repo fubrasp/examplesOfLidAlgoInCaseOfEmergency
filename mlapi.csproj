@@ -10,13 +10,13 @@
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.ML" Version="0.9.0" />
     <PackageReference Include="Microsoft.ML.TimeSeries" Version="0.9.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="ml\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Remove="ml\TransformSamplesIid.cs" />
     <Compile Remove="ml\TransformSamplesSsa.cs" />
   </ItemGroup>
 </Project>
