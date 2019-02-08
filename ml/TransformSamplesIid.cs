@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using MathNet.Numerics;
 using Microsoft.ML;
 using Microsoft.ML.Core.Data;
 using Microsoft.ML.Data;
@@ -44,6 +45,29 @@ namespace mlapi.ml
             return iidSpikeDatas;
         }
 
+        public static IEnumerable<IidSpikeData> GenerateDirtySinusoidal()
+        {
+            List<double> numbers = Generate.Sinusoidal(40, 1000.0, 50.0, 20.00).ToList();
+            List<IidSpikeData> iidSpikeDatas = new List<IidSpikeData>();
+            numbers.ForEach(
+            n => iidSpikeDatas.Add(new IidSpikeData((float)n))
+            );
+            return iidSpikeDatas;
+        }
+
+        public static IEnumerable<IidSpikeData> GenerateInitialExample()
+        {
+            int Size = 10;
+            var data = new List<IidSpikeData>(Size);
+            for (int i = 0; i < Size / 2; i++)
+                data.Add(new IidSpikeData(5));
+            data.Add(new IidSpikeData(10));
+             for (int i = 0; i < Size / 2; i++)
+                 data.Add(new IidSpikeData(5));
+
+            return data;
+        }
+
         // This example creates a time series (list of Data with the i-th element corresponding to the i-th time slot). 
         // IidSpikeDetector is applied then to identify spiking points in the series.
         public static IEnumerable<IidSpikePrediction> IidSpikeDetectorTransform()
@@ -51,17 +75,12 @@ namespace mlapi.ml
             // Create a new ML context, for ML.NET operations. It can be used for exception tracking and logging, 
             // as well as the source of randomness.
             var ml = new MLContext();
+            int Size = 10;
 
             // Generate sample series data with a spike
-            const int Size = 10;
-            var data = GenerateFakeDataSet();
-            //var data = new List<IidSpikeData>(Size);
-            //for (int i = 0; i < Size / 2; i++)
-            //    data.Add(new IidSpikeData(5));
-            // This is a spike
-            //data.Add(new IidSpikeData(10));
-            // for (int i = 0; i < Size / 2; i++)
-            //     data.Add(new IidSpikeData(5));
+            //var data = GenerateFakeDataSet();
+            var data = GenerateDirtySinusoidal();
+            //var data = GenerateInitialExample();
 
             // Convert data to IDataView.
             var dataView = ml.CreateStreamingDataView(data);
