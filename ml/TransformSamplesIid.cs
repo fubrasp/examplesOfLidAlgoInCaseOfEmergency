@@ -28,6 +28,22 @@ namespace mlapi.ml
             public double[] Prediction { get; set; }
         }
 
+        public static IEnumerable<IidSpikeData> GenerateFakeDataSet()
+        {
+            int startOfInterval = 29500;
+            int endOfInterval = 30500;
+
+            List<IidSpikeData> iidSpikeDatas = new List<IidSpikeData>();
+
+            Random random = new Random();
+            for(int i=0; i < 393; i++)
+            {
+                IidSpikeData iidSpikeData = new IidSpikeData(random.Next(startOfInterval, endOfInterval));
+                iidSpikeDatas.Add(iidSpikeData);
+            }
+            return iidSpikeDatas;
+        }
+
         // This example creates a time series (list of Data with the i-th element corresponding to the i-th time slot). 
         // IidSpikeDetector is applied then to identify spiking points in the series.
         public static IEnumerable<IidSpikePrediction> IidSpikeDetectorTransform()
@@ -38,13 +54,14 @@ namespace mlapi.ml
 
             // Generate sample series data with a spike
             const int Size = 10;
-            var data = new List<IidSpikeData>(Size);
-            for (int i = 0; i < Size / 2; i++)
-                data.Add(new IidSpikeData(5));
+            var data = GenerateFakeDataSet();
+            //var data = new List<IidSpikeData>(Size);
+            //for (int i = 0; i < Size / 2; i++)
+            //    data.Add(new IidSpikeData(5));
             // This is a spike
-            data.Add(new IidSpikeData(10));
-            for (int i = 0; i < Size / 2; i++)
-                data.Add(new IidSpikeData(5));
+            //data.Add(new IidSpikeData(10));
+            // for (int i = 0; i < Size / 2; i++)
+            //     data.Add(new IidSpikeData(5));
 
             // Convert data to IDataView.
             var dataView = ml.CreateStreamingDataView(data);

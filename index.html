@@ -5,71 +5,59 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <title>Title Goes Here</title>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
 </head>
 
 <body>
-    <canvas id="invoice_status_chart" min-height="300" max-height="500"></canvas>
-    <script type="text/javascript" charset="utf-8">
+    <script>
+        window.onload = function () {
+            
+            var dataPointsGood = [];
+            var dataPointsBad = [];
 
-        var invoice_status_data = {};
-    
-        function invoice_status_chart() {
-            var can = jQuery('#invoice_status_chart');
-            var ctx = can.get(0).getContext("2d");
-            var container = can.parent().parent(); // get width from proper parent
-    
-            var $container = jQuery(container);
-    
-            can.attr('width', $container.width()); //max width
-            can.attr('height', $container.height()); //max height                   
-    
-            var chart = new Chart(ctx).Doughnut(invoice_status_data);
+            $.getJSON('http://localhost:5000', function(data) {
+                let i = 0;
+                data.forEach(element => {
+                    if(element.Prediction[0]==0){
+                        dataPointsGood.push({ x: i, y: element.Prediction[1]})
+                    }else{
+                        dataPointsBad.push({ x: i, y: element.Prediction[1]})
+                    }
+                    i++
+                });
+                         var chart = new CanvasJS.Chart("chartContainer", {
+                     animationEnabled: true,
+                     title:{
+                         text: "BOND_EUROPE"
+                     },
+                     axisX: {
+                         title:"Date"
+                     },
+                     axisY:{
+                         title: "CountValue"
+                     },
+                     data: [{
+                         type: "scatter",
+                         toolTipContent: "<span style=\"color:#4F81BC \"><b>{name}</b></span><br/><b> Load:</b> {x} TPS<br/><b> Response Time:</b></span> {y} ms",
+                         name: "Good classification",
+                         showInLegend: true,
+                         dataPoints: dataPointsGood
+                     },
+                     {
+                         type: "scatter",
+                         name: "Bad classification",
+                         showInLegend: true, 
+                         toolTipContent: "<span style=\"color:#C0504E \"><b>{name}</b></span><br/><b> Load:</b> {x} TPS<br/><b> Response Time:</b></span> {y} ms",
+                         dataPoints: dataPointsBad
+                     }]
+                 });
+                 chart.render();
+            });
         }
-    
-        var invoice_status_data = function () {
-            jQuery.post( 'http://localhost:5000/', { 
-                action: 'callback_id', 
-                data: 'invoice_statuses',
-                security: 'nonce' 
-                },
-                function( data ) {
-                    console.log(data);
-                    invoice_status_data = [
-                        {
-                            value: data.status_temp,
-                            color:"#26292C",
-                            highlight: "#363B3F",
-                            label: "Temp"
-                        },
-                        {
-                            value: data.status_pending,
-                            color:"#FFA500",
-                            highlight: "#FAD694",
-                            label: "Pending"
-                        },
-                        {
-                            value: data.status_partial,
-                            color:"#E14D43",
-                            highlight: "#FF5A5E",
-                            label: "Partial"
-                        },
-                        {
-                            value: data.status_complete,
-                            color: "#76AB48",
-                            highlight: "#86BC4A",
-                            label: "Complete"
-                        }
-                    ];
-                    invoice_status_chart();
-                }
-            );
-        };
-    
-        jQuery(document).ready(function($) {
-            jQuery(window).resize(invoice_status_chart);
-            invoice_status_data();
-        });
-    </script>
+        </script>
+        </head>
+        <body>
+        <div id="chartContainer" style="height: 370px; width: 100%;">
+        <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+        </div>
 </body>
 </html>
